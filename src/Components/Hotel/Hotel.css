@@ -1,0 +1,13 @@
+.card .card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+}
+
+.hotel-card {
+    border: none;
+}
+
+.card h2 {
+    font-size: 24px;
+}

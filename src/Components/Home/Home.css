@@ -1,0 +1,61 @@
+.hero {
+    background: url('../../assets/image/coxs-bazar.png') no-repeat center center/cover;
+    height: 100vh;
+    position: relative;
+    color: #fff;
+
+}
+
+.hero .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    padding: 0 20px;
+}
+
+.hero .content h1 {
+    font-size: 55px;
+}
+
+.hero .content p {
+    font-size: 23px;
+    max-width: 600px;
+    margin: 20px 0 30px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.hero * {
+    z-index: 10;
+}
+
+/* Carousel style */
+.carousel-indicators div {
+    height: 7px;
+    width: 10px;
+    border-radius: 6px;
+    background-color: rgba(128, 128, 128, 0.3);
+    margin: 10px 3px;
+}
+
+.carousel-indicators .active {
+    height: 7px;
+    width: 30px;
+    border-radius: 14px;
+    background-image: linear-gradient(to right, #ff8206, #ffd019);
+}
+
+.carousel-img {
+    border-radius: 25px;
+}
