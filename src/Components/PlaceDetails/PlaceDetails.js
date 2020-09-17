@@ -6,65 +6,75 @@ import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../App';
-
+// ============================================================================================
 
 const PlaceDetails = () => {
+  // Get placeId based on user "Booking" button
   const { placeId } = useParams();
   // console.log('place Id', placeId)
-    
- const booking = placeData.find(id=>id.placeId === placeId)
-//  console.log('details page', booking)
 
- // Handle "Start Booking" 
- const history = useHistory();
+  // find the clicked place for the details place information
+  const booking = placeData.find((id) => id.placeId === placeId);
+  //  console.log('details page', booking)
 
   // Context from app.js
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
- 
- // check empty field
- const { handleSubmit } = useForm();
 
- const onSubmit =() => { 
-   if(loggedInUser.email){
-    history.push(`/hotel-details`)
-   } else{
-    history.push(`/login`);
-   }
-      
-  }
+  // check empty field with react-hook-form
+  const { handleSubmit } = useForm();
 
- 
+  // Handle "Start Booking" based on user login status
+  const history = useHistory();
+  const onSubmit = () => {
+    if (loggedInUser.email) {
+      history.push(`/hotel-details`);
+    } else {
+      history.push(`/login`);
+    }
+  };
+
   return (
     <Jumbotron className='hero d-flex align-items-center text-center'>
       <Container>
         <Row className='d-flex justify-items-center align-items-center'>
           <Col md={6} className='p-3 text-left'>
-        <h1 className='place-title'>{booking.name}</h1>
-            <p>
-              {booking.fullDescription}
-            </p>
+            <h1 className='place-title'>{booking.name}</h1>
+            <p>{booking.fullDescription}</p>
           </Col>
 
           <Col md={6}>
-            
-            <Form onSubmit={handleSubmit(onSubmit)} className='booking-form shadow mb-5 bg-white rounded text-left'>
+            <Form
+              onSubmit={handleSubmit(onSubmit)}
+              className='booking-form shadow mb-5 bg-white rounded text-left'
+            >
               <Form.Group controlId='formOrigin'>
                 <Form.Label>Origin</Form.Label>
-                <Form.Control name="origin" type='text' placeholder='Origin' required />
+                <Form.Control
+                  name='origin'
+                  type='text'
+                  placeholder='Origin'
+                  required
+                />
               </Form.Group>
               <Form.Group controlId='formDestination'>
                 <Form.Label>Destination</Form.Label>
-                <Form.Control name="destination" type='text' placeholder='Destination' value={booking.name} required />
+                <Form.Control
+                  name='destination'
+                  type='text'
+                  placeholder='Destination'
+                  value={booking.name}
+                  required
+                />
               </Form.Group>
               <Form.Row>
                 <Form.Group as={Col} controlId='fromDate'>
                   <Form.Label>From</Form.Label>
-                  <Form.Control name="fromDate" type='date' required />
+                  <Form.Control name='fromDate' type='date' required />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId='toDate'>
                   <Form.Label>To</Form.Label>
-                  <Form.Control name="toDate" type='date' required />
+                  <Form.Control name='toDate' type='date' required />
                 </Form.Group>
               </Form.Row>
               <Button style={{ width: '100%' }} variant='warning' type='submit'>

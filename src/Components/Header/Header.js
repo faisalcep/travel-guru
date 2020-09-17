@@ -15,19 +15,21 @@ import { Link, useHistory } from 'react-router-dom';
 import { UserContext } from '../../App';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-// import firebaseConfig from './firebase.config';
 
+// ============================================================================================
+
+// Handle Home Button
 const Header = () => {
-  // Handle Home Button
-  let history = useHistory();
+let history = useHistory();
   function handleClickHome() {
     history.push('/home');
   }
 
   // Context from app.js
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-  console.log('from header', loggedInUser);
+  // console.log('from header', loggedInUser);
 
+  // Handle sign out button
   const handleSignOut = () => {
     firebase
       .auth()
@@ -58,6 +60,7 @@ const Header = () => {
     >
       <Container>
         <Navbar.Brand>
+          {/* Home Button handle */}
           <img onClick={handleClickHome} src={logo} alt='Travel Guru' />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
@@ -76,7 +79,7 @@ const Header = () => {
             <Nav.Link href='#pricing'>Destination</Nav.Link>
             <Nav.Link href='#pricing'>Blog</Nav.Link>
             <Nav.Link href='#pricing'>Contact</Nav.Link>
-
+            {/* Switch login and sign out button and display user name */}
             <Nav.Link>
               {loggedInUser.email ? (
                 <Link to='/hotel-details' className='user-name'>
@@ -90,7 +93,7 @@ const Header = () => {
                 </Link>
               )}
             </Nav.Link>
-
+            {/* Sign Out button handle */}
             <Nav.Link>
               {loggedInUser.email && (
                 <Link to='/'>

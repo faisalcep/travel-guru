@@ -27,8 +27,8 @@ export const handleGoogleSignIn = () => {
 export const handleFbSignIn = () => {
   const fbProvider = new firebase.auth.FacebookAuthProvider();
     return firebase.auth().signInWithPopup(fbProvider)
-    .then(function (result) {
-      const { displayName, email } = result.user;
+    .then(function (res) {
+      const { displayName, email } = res.user;
       const signedInUser = { name: displayName, email: email };
       return signedInUser;
        })
@@ -37,6 +37,28 @@ export const handleFbSignIn = () => {
       console.log(errorMessage);
     });
 };
+
+
+// Github Sign In
+export const handleGithubSignIn=()=>{
+  const githubProvider = new firebase.auth.GithubAuthProvider();
+  return firebase
+      .auth()
+      .signInWithPopup(githubProvider)
+      .then(function (res) {
+        const { displayName, email } = res.user;
+      const signedInUser = { name: displayName, email: email };
+      return signedInUser;
+      })
+      .catch(function (err) {
+        const errorMessage = err.message;
+       console.log(errorMessage);
+      });
+  ;
+
+  
+}
+
 
 
 // Sign Out handler:
@@ -58,6 +80,18 @@ export const handleSignOut = () => {
 }
 
 
+// reset password
+export const resetPassword = (email) => {
+  let auth = firebase.auth();
+  auth
+    .sendPasswordResetEmail(email)
+    .then(function () {
+      // Email sent.
+    })
+    .catch(function (error) {
+      // An error happened.
+    });
+};
 
 
 
@@ -65,6 +99,7 @@ export const handleSignOut = () => {
 
 
 
+// not working for error message
 // Update user name
 // const updateUserName = name =>{
 //   const user = firebase.auth().currentUser;
@@ -112,12 +147,13 @@ export const handleSignOut = () => {
 //     const newUserInfo = {};
 //     newUserInfo.error = error.message;
 //     newUserInfo.success = false;
+//     console.log(newUserInfo);
 //     return newUserInfo;
 //   });
 // }
 
 
-// const verifyEmail = () => {
+//  const verifyEmail = () => {
 //   const userVerify = firebase.auth().currentUser;
 //   userVerify
 //     .sendEmailVerification()
@@ -126,20 +162,6 @@ export const handleSignOut = () => {
 //     })
 //     .catch(function (error) {
 //       console.log(error);
-//     });
-// };
-
-
-// // reset password
-// export const resetPassword = (email) => {
-//   let auth = firebase.auth();
-//   auth
-//     .sendPasswordResetEmail(email)
-//     .then(function () {
-//       // Email sent.
-//     })
-//     .catch(function (error) {
-//       // An error happened.
 //     });
 // };
 

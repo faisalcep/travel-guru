@@ -9,12 +9,17 @@ import HotelDetails from '../HotelDetails/HotelDetails';
 import MapView from '../MapView/MapView'
 
 const Hotel = () => {
+  // Get the placeId from local storage, based on user button clicked on Booking button
   const selectedPlaceId = localStorage.getItem('selectedPlace');
   const placeId = JSON.parse(selectedPlaceId);
 
+  // Find the user selected place
   const findPlace = placeData.find((place) => place.placeId == placeId);
+
+  // Filter hotel based on user selected place
   const hotelsFilter = hotelData.filter((hotel) => hotel.placeId == placeId);
 
+// Send the hotel information in the HotelDetails component as props
   return (
     <Container className='mt-5'>
       <hr />
@@ -26,6 +31,7 @@ const Hotel = () => {
             <HotelDetails key={hotel.hotelId} hotel={hotel}></HotelDetails>
           ))}
         </Col>
+        {/* Static Hotel Location not used latitude and longitude*/}
         <Col md={4}>
           <h4 className="text-center">Hotel Location</h4>
           <MapView></MapView>

@@ -4,6 +4,9 @@ import './Home.css';
 import placeData from '../../fakeData/placeData';
 import HomeBody from '../HomeBody/HomeBody';
 
+// ============================================================================================
+
+// Set up background image and Carousel and send placeData as props to HomeBody Component
 const Banner = () => {
   const [places, setPlaces] = useState(placeData);
  

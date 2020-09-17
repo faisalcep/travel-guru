@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
+// ============================================================================================
+
+// Get the hotel details from the Hotel component as props and show in this component
 const HotelDetails = (props) => {
 const {title, image, room, feature, cancellation, rating, price, total} = props.hotel
 
@@ -40,9 +43,7 @@ const {title, image, room, feature, cancellation, rating, price, total} = props.
                 </div>
               </Card.Body>
             </div>
-            {/* <Card.Footer>
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </Card.Footer> */}
+          
           </Card>
     );
 };

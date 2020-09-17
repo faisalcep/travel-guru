@@ -4,23 +4,26 @@ import { useHistory, useLocation } from 'react-router-dom';
 import './Login.css';
 import facebookIcon from '../../assets/icon/fb.png';
 import googleIcon from '../../assets/icon/google.png';
+import githubIcon from '../../assets/icon/github.png';
 import { UserContext } from '../../App';
 import { useForm } from 'react-hook-form';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import firebaseConfig from './firebase.config';
 import {
   initializeLoginFramework,
   handleGoogleSignIn,
-  handleSignOut,
   handleFbSignIn,
+  handleGithubSignIn,
+  resetPassword,
 } from './loginManager';
+
+// ============================================================================================
 
 const Login = () => {
   // Initialize Firebase
   initializeLoginFramework();
 
-  //New User:
+  //Handle New User:
   const [newUser, SetNewUSer] = useState(false);
 
   const [user, setUser] = useState({
@@ -32,7 +35,7 @@ const Login = () => {
   // Context from app.js
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
-  // redirecting to Hotel Component if signed In successfully
+  // Redirecting to Hotel Component if signed In successfully
   const history = useHistory();
   const location = useLocation();
   const { from } = location.state || {
@@ -41,15 +44,16 @@ const Login = () => {
 
   // Google Sign In
   const googleSignIn = () => {
-    handleGoogleSignIn().then((res) => {
-      handleResponse(res, true);
-    });
+    handleGoogleSignIn().then((res) => handleResponse(res, true));
   };
   // Facebook Sign In
   const fbSignIn = () => {
-    handleFbSignIn().then((res) => {
-      handleResponse(res, true);
-    });
+    handleFbSignIn().then((res) => handleResponse(res, true));
+  };
+
+  // Github Sign In
+  const githubSignIn = () => {
+    handleGithubSignIn().then((res) => handleResponse(res, true));
   };
 
   // handle Response
@@ -62,13 +66,14 @@ const Login = () => {
   };
 
   // handle Sign Out
-  const signOut = () => {
-    handleSignOut().then((res) => {
-      handleResponse(res, false);
-    });
-  };
+  // const signOut = () => {
+  //   handleSignOut().then((res) => {
+  //     handleResponse(res, false);
+  //   });
+  // };
   // =========================================================
 
+  // Validate form input
   const handleBlur = (e) => {
     // debugger;
     let isFieldValid = true;
@@ -91,7 +96,7 @@ const Login = () => {
     }
   };
 
-  // handle login with email and password
+  // Handle login with email and password
   const handleUserSubmit = () => {
     // console.log(user.email, user.password);
     if (newUser && user.email && user.password) {
@@ -126,6 +131,7 @@ const Login = () => {
     // e.preventDefault();
   };
 
+  // Update username
   const updateUserName = (name) => {
     var user = firebase.auth().currentUser;
     user
@@ -133,7 +139,7 @@ const Login = () => {
         displayName: name,
       })
       .then(function (res) {
-        setUser(res.user)
+        setUser(res.user);
       })
       .catch(function (error) {
         // An error happened.
@@ -141,7 +147,7 @@ const Login = () => {
       });
   };
 
-  // Verification email
+  // Send verification email
   const verifyEmail = () => {
     const userVerify = firebase.auth().currentUser;
     userVerify
@@ -154,32 +160,25 @@ const Login = () => {
       });
   };
 
-  // Reset password
-  const resetPassword = (email) => {
-    let auth = firebase.auth();
-    auth
-      .sendPasswordResetEmail(email)
-      .then(function () {
-        // Email sent.
-      })
-      .catch(function (error) {
-        // An error happened.
-      });
-  };
-
+  // React hook form for extra form validation and error message
   const { register, handleSubmit, watch, errors } = useForm();
 
   return (
     <Container className='d-flex justify-content-center mt-4'>
       <Row>
         <Col md={12}>
+          {/* If not a new user then show this form, else Sign Up form*/}
           {!newUser ? (
             <Form
               onSubmit={handleSubmit(handleUserSubmit)}
               className='login-form shadow bg-white rounded text-left p-3'
             >
-              {/* Show error message if user not exist or password is wrong */}
-              {user != null && <p className='text-danger'>* {user.error}</p>}
+              {/* Show error message if user not exist or password is wrong or other error */}
+              {user != null && (
+                <p style={{ maxWidth: '400px' }} className='text-danger'>
+                  * {user.error}
+                </p>
+              )}
               <h4 className='font-weight-bold mb-3'>Login</h4>
               <Form.Group controlId='formEmail'>
                 <Form.Control
@@ -249,6 +248,10 @@ const Login = () => {
                   <img src={googleIcon} alt='google icon' />{' '}
                   <span>Continue with Google</span>
                 </Button>
+                <Button onClick={githubSignIn}>
+                  <img src={githubIcon} alt='github icon' />{' '}
+                  <span>Continue with Github</span>
+                </Button>
               </div>
             </Form>
           ) : (
@@ -257,7 +260,11 @@ const Login = () => {
               className='login-form shadow bg-white rounded text-left p-3'
             >
               {/* Show error message if user not exist or password is wrong */}
-              {user != null && <p className='text-danger'>* {user.error}</p>}
+              {user != null && (
+                <p style={{ maxWidth: '400px' }} className='text-danger'>
+                  * {user.error}
+                </p>
+              )}
               <h4 className='font-weight-bold mb-3'>Login</h4>
               <Form.Group controlId='formFirstName'>
                 <Form.Control
@@ -292,7 +299,9 @@ const Login = () => {
                   ref={register({ required: true, minLength: 6 })}
                 />
                 {errors.password && (
-                  <span className='error'>6 character with at least 1 digit is required</span>
+                  <span className='error'>
+                    6 character with at least 1 digit is required
+                  </span>
                 )}
               </Form.Group>
               <Form.Group controlId='formConfirmPassword'>
@@ -351,6 +360,10 @@ const Login = () => {
                 <Button onClick={googleSignIn}>
                   <img src={googleIcon} alt='google icon' />{' '}
                   <span>Continue with Google</span>
+                </Button>
+                <Button onClick={githubSignIn}>
+                  <img src={githubIcon} alt='github icon' />{' '}
+                  <span>Continue with Github</span>
                 </Button>
               </div>
             </Form>

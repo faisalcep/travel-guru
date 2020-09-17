@@ -4,21 +4,22 @@ import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
+// ============================================================================================
+
+// Set up Carousel view and receive placeData as props from Home Component
+
 const ShowcaseBody = (props) => {
   //   console.log(props.place);
   const { name, image, shortDescription, placeId } = props.place;
 
-  // Handle "Booking" Button dynamically
+  // Handle "Booking" Button dynamically and store the placeId for later use in Hotel Component
   const history = useHistory();
   const handleClickPlace = (placeId) => {
     history.push(`/place-details/${placeId}`);
     localStorage.setItem('selectedPlace', placeId);
   };
 
-  
-
   return (
-    // <Carousel.Item>
     <Row className='d-flex align-items-center justify-content-center'>
       <Col md={5}>
         <div className='mb-2'>
@@ -39,7 +40,6 @@ const ShowcaseBody = (props) => {
         />
       </Col>
     </Row>
-    // </Carousel.Item>
   );
 };
 
