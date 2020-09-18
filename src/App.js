@@ -9,6 +9,7 @@ import Hotel from './Components/Hotel/Hotel';
 import NoMatch from './Components/NoMatch/NoMatch';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import HotelDetails from './Components/HotelDetails/HotelDetails';
 
 export const UserContext = createContext();
 
@@ -26,13 +27,13 @@ function App() {
             <Home />
           </Route>
           <Route exact path='/login'>
-            <Login></Login>
+            <Login/>
           </Route>
           <Route path='/place-details/:placeId'>
             <PlaceDetails />
           </Route>
           <PrivateRoute path='/hotel-details'>
-            <Hotel />
+            <Hotel></Hotel>
           </PrivateRoute>
           <Route exact path='/'>
             <Home />

@@ -35,12 +35,28 @@ const Login = () => {
   // Context from app.js
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
-  // Redirecting to Hotel Component if signed In successfully
+// Redirecting to Home / HotelDetails Component if signed In successfully
   const history = useHistory();
   const location = useLocation();
-  const { from } = location.state || {
-    from: { pathname: '/hotel-details/' },
+
+let isKeyExist;
+if (localStorage.getItem("selectedPlace") === null) {
+   isKeyExist  = location.state || {
+    from: { pathname: '/' },
   };
+}
+  else {
+     isKeyExist  = location.state || {
+    from: { pathname: '/hotel-details' },
+  }
+}
+
+const {from} = isKeyExist;
+// console.log(from);
+
+  // const { from } = location.state || {
+  //   from: { pathname: '/hotel-details' },
+  // };
 
   // Google Sign In
   const googleSignIn = () => {

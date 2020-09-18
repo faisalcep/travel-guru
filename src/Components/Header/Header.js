@@ -76,9 +76,9 @@ let history = useHistory();
           </InputGroup>
           <Nav className='d-flex justify-content-between nav-link ml-auto align-items-md-center '>
             {/* <Nav.Link href='#features'>News</Nav.Link> */}
-            <Nav.Link href='#pricing'>Destination</Nav.Link>
-            <Nav.Link href='#pricing'>Blog</Nav.Link>
-            <Nav.Link href='#pricing'>Contact</Nav.Link>
+            <Nav.Link> <Link style={{color: '#333'}} to='/'>Home</Link></Nav.Link>
+            <Nav.Link href='#blog'>Blog</Nav.Link>
+            <Nav.Link href='#contact'>Contact</Nav.Link>
             {/* Switch login and sign out button and display user name */}
             <Nav.Link>
               {loggedInUser.email ? (

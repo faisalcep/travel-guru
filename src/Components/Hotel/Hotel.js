@@ -9,6 +9,7 @@ import HotelDetails from '../HotelDetails/HotelDetails';
 import MapView from '../MapView/MapView'
 
 const Hotel = () => {
+
   // Get the placeId from local storage, based on user button clicked on Booking button
   const selectedPlaceId = localStorage.getItem('selectedPlace');
   const placeId = JSON.parse(selectedPlaceId);
@@ -21,6 +22,7 @@ const Hotel = () => {
 
 // Send the hotel information in the HotelDetails component as props
   return (
+    
     <Container className='mt-5'>
       <hr />
       <small>252 stays Apr 13-17 3 guests</small>
@@ -38,6 +40,7 @@ const Hotel = () => {
         </Col>
       </Row>
     </Container>
+
   );
 };
 
