@@ -20,6 +20,12 @@ const Hotel = () => {
   // Filter hotel based on user selected place
   const hotelsFilter = hotelData.filter((hotel) => hotel.placeId == placeId);
 
+   // Mark selected place in map
+   const marker = {
+    "lat":findPlace.lat,
+    "lng":findPlace.lng
+}
+
 // Send the hotel information in the HotelDetails component as props
   return (
     
@@ -33,10 +39,10 @@ const Hotel = () => {
             <HotelDetails key={hotel.hotelId} hotel={hotel}></HotelDetails>
           ))}
         </Col>
-        {/* Static Hotel Location not used latitude and longitude*/}
+        
         <Col md={4}>
           <h4 className="text-center">Hotel Location</h4>
-          <MapView></MapView>
+          <MapView marker={marker}></MapView>
         </Col>
       </Row>
     </Container>

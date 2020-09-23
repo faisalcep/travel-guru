@@ -53,6 +53,7 @@ const PlaceDetails = () => {
                   name='origin'
                   type='text'
                   placeholder='Origin'
+                  defaultValue='Dhaka'
                   required
                 />
               </Form.Group>
@@ -62,7 +63,7 @@ const PlaceDetails = () => {
                   name='destination'
                   type='text'
                   placeholder='Destination'
-                  value={booking.name}
+                  defaultValue={booking.name}
                   required
                 />
               </Form.Group>
